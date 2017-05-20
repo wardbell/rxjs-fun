@@ -11,23 +11,17 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/share';
 import 'rxjs/add/operator/switchMap';
 
-/* Whether to log caching activity to console. For debugging/demos. */
-let _verbose = true;
-export function getVerbose() { return _verbose; }
-export function setVerbose(value: boolean) { _verbose = value; }
-
 /** Cached values expire after this period (ms) by default */
 export const defaultExpirationPeriod = 3000;
 
-/** Caching event notification callback */
-export type Notifier = (msg: NotificationMessage) => void;
+///////////// createCache ///////////////////
 
 /**
  * Cache values and update from source whenever next emits
  * @param {Observable<T>} source The async source of the data
  * @param {Observable<any>} updateWhen When this observable emits, update the cache from the source
- * @param {T | ReplaySubject<T> | BehaviorSubject<T>} [initialValue] Optional.
- *   Initial value of cache before first source execution or the Subject<T> to use.
+ * @param {T | ReplaySubject<T> | BehaviorSubject<T>} [initialValue] Optional initial value of cache
+ *   before first source execution or the Subject<T> to use.
  */
 export function createCache<T>(
   source: Observable<T>,
@@ -43,6 +37,8 @@ export function createCache<T>(
 
   return cacheSubject.asObservable();
 };
+
+///////////// OnDemandCache ///////////////////
 
 /*
  * Cache values from an async source (e.g., HTTP call) in an observable.
@@ -79,8 +75,8 @@ export function createCache<T>(
  * @param {Observable<boolean>} updateWhen The "demand" observable that may update the cache.
  * @param {Notifier} [notifier] Optional. Called with caching activity messages.
  * @param {number} [expirationPeriod=defaultExpirationPeriod] Expiration window.
- * @param {T | ReplaySubject<T> | BehaviorSubject<T>} [initialValue] Optional.
- *   Initial value of cache before first source execution or the Subject<T> to use.
+ * @param {T | ReplaySubject<T> | BehaviorSubject<T>} [initialValue] Optional initial value of cache
+ *   before first source execution or the Subject<T> to use.
  */
 export function createOnDemandCache<T>(
   source: Observable<T>,
@@ -119,6 +115,25 @@ export function createOnDemandCache<T>(
   );
 };
 
+///////////// Notification ///////////////////
+
+/** Caching event notification callback */
+export type Notifier = (msg: NotificationMessage) => void;
+
+/** Message provided to notifiers. */
+export class NotificationMessage {
+  constructor(
+    public type: 'cached' | 'fetching' | 'fetched' | 'error',
+    public message?: string,
+    public body?: any) {
+      body ? log(message, body) : log(message);
+    }
+}
+
+export function NullNotifier(msg: NotificationMessage) { }
+
+///////////// TimerCache ///////////////////
+
 /*
  * Invoke async observable source (e.g., HTTP call), cache the result
  * and then refresh the cached value from a new HTTP call periodically
@@ -134,8 +149,8 @@ export function createOnDemandCache<T>(
  *
  * @param {Observable<T>} source Async source of values.
  * @param {number} [expirationPeriod=defaultExpirationPeriod] Cache refresh interval
- * @param {T | ReplaySubject<T> | BehaviorSubject<T>} [initialValue] Optional.
- *   Initial value of cache before first source execution or the Subject<T> to use.
+ * @param {T | ReplaySubject<T> | BehaviorSubject<T>} [initialValue] Optional initial value of cache
+ *   before first source execution or the Subject<T> to use.
  */
 export function createTimerCache<T>(
   source: Observable<T>,
@@ -161,23 +176,18 @@ export function createTimerCache<T>(
     .share();
 }
 
-/** Message provided to notifiers. */
-export class NotificationMessage {
-  constructor(
-    public type: 'cached' | 'fetching' | 'fetched' | 'error',
-    public message?: string,
-    public body?: any) {
-      body ? log(message, body) : log(message);
-    }
+////////// Helpers ///////////////
+
+function getSubject<T>(value?: T | BehaviorSubject<T> | ReplaySubject<T>) {
+  return value instanceof Subject ? value : new BehaviorSubject(value);
 }
 
-export function NullNotifier(msg: NotificationMessage) { }
+/* Whether to log caching activity to console. For debugging/demos. */
+let _verbose = true;
+export function getVerbose() { return _verbose; }
+export function setVerbose(value: boolean) { _verbose = value; }
 
 // logger logs to console when verbose == true
 export function log(...args) {
   if (_verbose) { console.log.apply(null, args); }
-}
-
-function getSubject<T>(value?: T | BehaviorSubject<T> | ReplaySubject<T>) {
-  return value instanceof Subject ? value : new BehaviorSubject(value);
 }

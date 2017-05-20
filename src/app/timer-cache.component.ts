@@ -11,7 +11,7 @@ import { TimerCacheService } from './timer-cache.service';
 @Component({
   selector: 'timer-cache',
   template: `
-  <h1>TimerCache Heroes</h1>
+  <h2>TimerCache Heroes</h2>
   <div *ngFor="let hero of heroCache | async">
     {{hero.name}} {{hero.count}}
   </div>
