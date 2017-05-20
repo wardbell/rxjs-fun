@@ -24,14 +24,12 @@ export class TimerCacheComponent implements OnInit, OnDestroy {
   heroCache: Observable<Hero[]>;
 
   constructor(timerCacheService: TimerCacheService) {
-    this.heroCache = timerCacheService.cache;
+    this.heroCache = timerCacheService.heroes;
   }
 
   ngOnInit() {
-
-    log('*** Start subscribing ***');
-
     // Try it with two additional Subscribers
+    log('*** TimerCacheComponent created; start subscribing ***');
 
     this.heroCache.takeUntil(this.onDestroy).subscribe(
       h => log('Subscriber A: got heroes', h),
