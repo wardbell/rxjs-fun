@@ -2,6 +2,7 @@
 
 RxJS + Angular: examples, experiments, and presentations
 
+RXjs Timer Cache example is [on plunker](https://plnkr.co/edit/urMxeORFvsKyqb8ijV64).
 
 ## Angular CLI-based
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.0.4.
