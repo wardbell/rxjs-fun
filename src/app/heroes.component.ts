@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 
-import { Hero, HeroesService } from './heroes.service';
+import { Hero } from 'app/hero';
+import { HeroesService } from './heroes.service';
 
 @Component({
   selector: 'app-heroes',
   template: `
-  <h2>{{title}}</h2>
+  <h2>Heroes</h2>
 
   <ul>
     <li>
@@ -20,7 +21,6 @@ import { Hero, HeroesService } from './heroes.service';
   `
 })
 export class HeroesComponent implements OnInit {
-  title = 'Heroes';
   heroes: Hero[];
   selectedHero: Hero;
 
@@ -33,6 +33,9 @@ export class HeroesComponent implements OnInit {
   getHeroes() {
 
     this.heroService.heroes
+
+      // .do(null, null, () => console.log('heroes completed'))
+
       .subscribe(heroes => this.heroes = heroes);
 
   }

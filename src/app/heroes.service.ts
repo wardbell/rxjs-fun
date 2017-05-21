@@ -4,35 +4,23 @@ import { Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/publishLast';
 
-import { debugLog } from './debug-logger';
-import { Hero } from './hero';
-export { Hero }
+import { AppEventBus } from 'app/app-event-bus.service';
+import { Hero, heroTouch } from './hero';
 
 @Injectable()
 export class HeroesService {
 
   heroes: Observable<Hero[]>;
-  heroesForever: Observable<Hero[]>;
 
-  constructor(private http: Http) {
+  constructor(http: Http, appEventBus: AppEventBus) {
 
-    this.heroes = this.http.get('heroes.json')
-      .do(() => debugLog('Fetched by heroes'))
+    this.heroes = http.get('heroes.json')
       .map(res => res.json() as Hero[])
+
+      .do(() => appEventBus.log('HeroesService', 'Fetched heroes'))
+
       .map(heroes => heroTouch(heroes));
-
-
-    const heroesForever = this.heroesForever = this.heroes.publishLast();
-    heroesForever.connect(); // start subscribing.
-
   }
 }
 
-let count = 0;
-
-/** Update each hero's count as it arrives, so distinguish freshly fetched heroes */
-export function heroTouch(heroes: Hero[]) {
-  return heroes.map(h => { h.count = count++; return h; });
-}

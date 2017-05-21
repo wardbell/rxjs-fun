@@ -6,23 +6,24 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/map';
 
-import { debugLog } from './debug-logger';
+import { AppEventBus } from 'app/app-event-bus.service';
 import { Villain } from './villain';
-export { Villain }
 
 @Injectable()
 export class VillainsService {
 
   villains: Observable<Villain[]>;
 
-  constructor(private http: Http) {
+  constructor(http: Http, appEventBus: AppEventBus) {
 
-  this.villains = this.http.get('villains.json')
-    .do(() => debugLog('Fetched villains'))
+  this.villains = http.get('villains.json')
     .map(res => res.json() as Villain[])
 
+    .do(() => appEventBus.log('VillainsService', 'Fetched villains'))
+
     .catch(err => {
-      console.log('Oh NO!  This is terrible. Better figure it out. Could be tough', err);
+      appEventBus.log('VillainsService error',
+        'Oh NO!  This is terrible. Better figure it out. Could be tough', err);
 
       // Throw a helpful message for the service consumer
       throw new Error('Failed to get villains from the server. Have a nice day :-)');

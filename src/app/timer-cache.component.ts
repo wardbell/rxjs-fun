@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
+import { Subscription } from 'rxjs/Subscription';
 import 'rxjs/add/operator/takeUntil';
 
 import { debugLog } from './debug-logger';
@@ -20,6 +21,7 @@ import { TimerCacheService } from './timer-cache.service';
 export class TimerCacheComponent implements OnInit, OnDestroy {
 
   private onDestroy = new Subject();
+  private subscriptionA; Subscription;
 
   heroCache: Observable<Hero[]>;
 
@@ -28,23 +30,35 @@ export class TimerCacheComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    // Try it with two additional Subscribers
+    // Add subscribers
     debugLog('*** TimerCacheComponent created; start subscribing ***');
 
-    this.heroCache.takeUntil(this.onDestroy).subscribe(
-      h => debugLog('Subscriber A: got heroes', h),
-      err => debugLog('Subscriber A error', err),
-      () => debugLog('Subscriber A completed')
-    );
+    /// subscription approach ///
 
-    this.heroCache.takeUntil(this.onDestroy).subscribe(
-      h => debugLog('Subscriber B: got heroes', h),
-      err => debugLog('Subscriber B error', err),
-      () => debugLog('Subscriber B completed')
-    );
+    this.subscriptionA = this.heroCache
+      .subscribe(this.makeSubscriber('A'));
+
+    /// takeUntil approach ///
+
+    this.heroCache
+      .takeUntil(this.onDestroy)
+      .subscribe(this.makeSubscriber('B'));
+
+    this.heroCache
+      .takeUntil(this.onDestroy)
+      .subscribe(this.makeSubscriber('C'));
+  }
+
+  makeSubscriber(name: string) {
+    return {
+      next:     hero => debugLog(`Subscriber ${name}: got heroes`, hero),
+      error:    err => debugLog(`Subscriber ${name} error`, err),
+      complete: () => debugLog(`Subscriber ${name} completed`)
+    };
   }
 
   ngOnDestroy() {
+    this.subscriptionA.unsubscribe();
     this.onDestroy.next();
   }
 }

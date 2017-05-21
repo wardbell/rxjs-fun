@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
-import { Hero, HeroesService } from './heroes.service';
+import { Hero } from './hero';
+import { HeroesForeverService } from 'app/heroes-forever.service';
 
 @Component({
   selector: 'app-heroes',
@@ -23,7 +24,7 @@ export class HeroesForeverComponent implements OnInit {
   heroes: Hero[];
   selectedHero: Hero;
 
-  constructor(private heroService: HeroesService) { }
+  constructor(private heroForeverService: HeroesForeverService) { }
 
   ngOnInit() {
     this.getHeroes();
@@ -32,7 +33,10 @@ export class HeroesForeverComponent implements OnInit {
   getHeroes() {
 
     // This time we get heroes from the CACHED observable
-    this.heroService.heroesForever
+    this.heroForeverService.heroesForever
+
+      // .do(null, null, () => console.log('heroes forever completed'))
+
       .subscribe(heroes => this.heroes = heroes);
 
   }

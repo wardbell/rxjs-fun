@@ -8,7 +8,8 @@ li {
 }
 
 li.selected {
-  background: blue;
+  color: blue;
+  background: skyblue;
 }
 
 li:hover {

@@ -9,8 +9,9 @@ import { Component } from '@angular/core';
       <router-outlet></router-outlet>
     </div>
   </div>
+  <hr>
+  <app-events></app-events>
   `
 })
 export class AppComponent {
-
 }

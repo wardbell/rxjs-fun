@@ -4,8 +4,8 @@ import { Component, OnInit } from '@angular/core';
   selector: 'app-nav',
   template: `
   <div class="navbar" >
-    <a [routerLink]="['/dashboard']"
-      routerLinkActive="router-link-active"><span>Dashboard</span></a>
+    <a [routerLink]="['/play']"
+      routerLinkActive="router-link-active"><span>Play</span></a>
     <a [routerLink]="['/heroes']"
       routerLinkActive="router-link-active"><span>Heroes</span></a>
     <a [routerLink]="['/heroes-forever']"

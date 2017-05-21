@@ -4,11 +4,14 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule, JsonpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
+import { AppEventBus } from './app-event-bus.service';
+import { AppEventComponent } from 'app/app-events.component';
 import { AppRoutingModule } from './app-routing.module';
-import { DashboardComponent } from 'app/dashboard.component';
+import { PlaygroundComponent } from 'app/playground.component';
 import { HeroesComponent } from 'app/heroes.component';
-import { HeroesForeverComponent } from 'app/heroesForever.component';
+import { HeroesForeverComponent } from 'app/heroes-forever.component';
 import { HeroesService } from 'app/heroes.service';
+import { HeroesForeverService } from 'app/heroes-forever.service';
 import { NavComponent } from './nav.component';
 import { TimerCacheComponent } from './timer-cache.component';
 import { TimerCachePageComponent } from './timer-cache-page.component';
@@ -29,7 +32,8 @@ import { WikiService } from 'app/wiki.service';
 
   declarations: [
     AppComponent,
-    DashboardComponent,
+    AppEventComponent,
+    PlaygroundComponent,
     HeroesComponent, HeroesForeverComponent,
     NavComponent,
     TimerCacheComponent, TimerCachePageComponent,
@@ -38,7 +42,8 @@ import { WikiService } from 'app/wiki.service';
   ],
 
   providers: [
-    HeroesService,
+    AppEventBus,
+    HeroesService, HeroesForeverService,
     TimerCacheService,
     VillainsService,
     WikiService,
