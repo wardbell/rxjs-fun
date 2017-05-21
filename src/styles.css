@@ -28,3 +28,7 @@ div.navbar {
 div.navbar a {
   padding: 4px;
 }
+
+input.search {
+  font-size: 20px;
+}

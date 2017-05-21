@@ -6,6 +6,7 @@ import { HeroesComponent } from './heroes.component';
 import { HeroesForeverComponent } from 'app/heroesForever.component';
 import { TimerCachePageComponent } from './timer-cache-page.component';
 import { VillainsComponent } from './villains.component';
+import { WikiComponent } from 'app/wiki.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'dashboard', },
@@ -14,6 +15,7 @@ const routes: Routes = [
   { path: 'heroes-forever', component: HeroesForeverComponent },
   { path: 'timer-cache', component: TimerCachePageComponent },
   { path: 'villains', component: VillainsComponent },
+  { path: 'wiki', component: WikiComponent },
   { path: '**', redirectTo: 'dashboard'}
 ];
 
