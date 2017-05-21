@@ -10,8 +10,8 @@
       "assets": [
         "assets",
         "favicon.ico",
-        "hero.json",
-        "villain.json"
+        "heroes.json",
+        "villains.json"
       ],
       "index": "index.html",
       "main": "main.ts",

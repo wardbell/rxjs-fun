@@ -5,7 +5,7 @@ import { Hero, HeroesService } from './heroes.service';
 @Component({
   selector: 'app-heroes',
   template: `
-  <h2>{{title}}</h2>
+  <h2>Heroes Forever</h2>
 
   <ul>
     <li>
@@ -19,8 +19,7 @@ import { Hero, HeroesService } from './heroes.service';
   </ul>
   `
 })
-export class HeroesComponent implements OnInit {
-  title = 'Heroes';
+export class HeroesForeverComponent implements OnInit {
   heroes: Hero[];
   selectedHero: Hero;
 
@@ -32,7 +31,8 @@ export class HeroesComponent implements OnInit {
 
   getHeroes() {
 
-    this.heroService.heroes
+    // This time we get heroes from the CACHED observable
+    this.heroService.heroesForever
       .subscribe(heroes => this.heroes = heroes);
 
   }

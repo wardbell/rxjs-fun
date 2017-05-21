@@ -4,8 +4,8 @@ import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 import 'rxjs/add/operator/takeUntil';
 
+import { debugLog } from './debug-logger';
 import { Hero } from './hero';
-import { log } from './caching-fns';
 import { TimerCacheService } from './timer-cache.service';
 
 @Component({
@@ -29,18 +29,18 @@ export class TimerCacheComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     // Try it with two additional Subscribers
-    log('*** TimerCacheComponent created; start subscribing ***');
+    debugLog('*** TimerCacheComponent created; start subscribing ***');
 
     this.heroCache.takeUntil(this.onDestroy).subscribe(
-      h => log('Subscriber A: got heroes', h),
-      err => log('Subscriber A error', err),
-      () => log('Subscriber A completed')
+      h => debugLog('Subscriber A: got heroes', h),
+      err => debugLog('Subscriber A error', err),
+      () => debugLog('Subscriber A completed')
     );
 
     this.heroCache.takeUntil(this.onDestroy).subscribe(
-      h => log('Subscriber B: got heroes', h),
-      err => log('Subscriber B error', err),
-      () => log('Subscriber B completed')
+      h => debugLog('Subscriber B: got heroes', h),
+      err => debugLog('Subscriber B error', err),
+      () => debugLog('Subscriber B completed')
     );
   }
 

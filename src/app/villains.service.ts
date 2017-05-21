@@ -3,8 +3,10 @@ import { Http } from '@angular/http';
 
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
+import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/map';
 
+import { debugLog } from './debug-logger';
 import { Villain } from './villain';
 export { Villain }
 
@@ -15,7 +17,8 @@ export class VillainsService {
 
   constructor(private http: Http) {
 
-  this.villains = this.http.get('villain.json')
+  this.villains = this.http.get('villains.json')
+    .do(() => debugLog('Fetched villains'))
     .map(res => res.json() as Villain[])
 
     .catch(err => {

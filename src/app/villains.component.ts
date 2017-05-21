@@ -10,11 +10,11 @@ import 'rxjs/add/operator/do';
 @Component({
   selector: 'app-villains',
   template: `
-    <h2>{{title}}</h2>
+    <h2>Villains</h2>
     <p *ngIf="errorMessage" class="error-message">{{errorMessage}}</p>
     <ul>
       <li>
-        <button (click)="getHeroes()">Refresh villains</button>
+        <button (click)="getVillains()">Refresh villains</button>
       </li>
       <li *ngFor="let villain of villains | async">
         {{villain.id}} - {{villain.name}}
@@ -34,6 +34,8 @@ export class VillainsComponent implements OnInit {
   }
 
   getVillains() {
+
+    // No subscription!  Let async pipe subscribe!
 
     this.villains = this.villainService.villains
       .do(() => this.errorMessage = '')

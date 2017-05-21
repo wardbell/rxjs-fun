@@ -8,6 +8,8 @@ import { Component, OnInit } from '@angular/core';
       routerLinkActive="router-link-active"><span>Dashboard</span></a>
     <a [routerLink]="['/heroes']"
       routerLinkActive="router-link-active"><span>Heroes</span></a>
+    <a [routerLink]="['/heroes-forever']"
+      routerLinkActive="router-link-active"><span>Heroes Forever</span></a>
     <a [routerLink]="['/villains']"
       routerLinkActive="router-link-active"><span>Villains</span></a>
     <a [routerLink]="['/timer-cache']"

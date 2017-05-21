@@ -3,6 +3,10 @@ ul {
   list-style-type: none;
 }
 
+li {
+  padding: 4px 0;
+}
+
 li.selected {
   background: blue;
 }

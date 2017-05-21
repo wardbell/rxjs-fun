@@ -11,6 +11,8 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/share';
 import 'rxjs/add/operator/switchMap';
 
+import { debugLog } from './debug-logger';
+
 /** Cached values expire after this period (ms) by default */
 export const defaultExpirationPeriod = 3000;
 
@@ -126,7 +128,7 @@ export class NotificationMessage {
     public type: 'cached' | 'fetching' | 'fetched' | 'error',
     public message?: string,
     public body?: any) {
-      body ? log(message, body) : log(message);
+      body ? debugLog(message, body) : debugLog(message);
     }
 }
 
@@ -161,11 +163,11 @@ export function createTimerCache<T>(
 
   return Observable.timer(0, expirationPeriod)
     .switchMap(count => {
-      log('source executing #' + count);
+      debugLog('source executing #' + count);
 
       // next executes source exactly once, then updates cache, then returns the cache
       const next = source.first()
-        .do(data => log('Fetched data arrived'))
+        .do(data => debugLog('Fetched data arrived'))
         .do(data => cacheSubject.next(data))
         .switchMap(() => cacheSubject);
 
@@ -182,12 +184,3 @@ function getSubject<T>(value?: T | BehaviorSubject<T> | ReplaySubject<T>) {
   return value instanceof Subject ? value : new BehaviorSubject(value);
 }
 
-/* Whether to log caching activity to console. For debugging/demos. */
-let _verbose = true;
-export function getVerbose() { return _verbose; }
-export function setVerbose(value: boolean) { _verbose = value; }
-
-// logger logs to console when verbose == true
-export function log(...args) {
-  if (_verbose) { console.log.apply(null, args); }
-}
