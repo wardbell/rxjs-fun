@@ -1,0 +1,39 @@
+<h2>Playground</h2>
+
+<p *ngIf="errorMessage" class="error-message">{{errorMessage}}</p>
+
+<div>
+  <button (click)="clear()">Clear</button>
+  <button (click)="demo1()">Observable demo #1</button>
+  <button (click)="demo2()">Observable demo #2</button>
+  {{currentDemo}}
+</div>
+
+<br>
+
+<table>
+  <thead>
+    <tr><th>Binding</th><th>Observable</th></tr>
+  </thead>
+
+  <tr>
+    <td>
+      <input class="play" #nginput (keyup)="react($event.target.value)"/>
+    </td>
+
+    <td>
+      <input class="play" #input/>
+    </td>
+  </tr>
+  <tr>
+
+    <td><ol>
+      <li *ngFor="let ngItem of ngItems">{{ngItem}}</li>
+    </ol></td>
+
+    <td><ol>
+      <li *ngFor="let item of items">{{item}}</li>
+    </ol></td>
+
+  </tr>
+</table>

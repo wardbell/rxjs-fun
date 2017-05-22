@@ -33,3 +33,11 @@ div.navbar a {
 input.search {
   font-size: 20px;
 }
+
+input.play {
+  font-size: 20px;
+}
+
+tr {
+  vertical-align: top;
+}
