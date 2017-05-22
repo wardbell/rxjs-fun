@@ -1,5 +1,7 @@
-[
-  { "name": "Magneta", "count": 1 },
-  { "name": "Voltana", "count": 1 },
-  { "name": "Dr. IQ" , "count": 1 }
-]
+{
+  "data": [
+    { "id": 1, "name": "Magneta",  "count": 1, "bio": "A truly magnetic personality." },
+    { "id": 2, "name": "Bombasto", "count": 1, "bio": "Careful how you speak to him."},
+    { "id": 3, "name": "Voltana",  "count": 1, "bio": "She\"s shockingly nice." }
+  ]
+}

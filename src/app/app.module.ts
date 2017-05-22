@@ -2,11 +2,13 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { HttpModule, JsonpModule } from '@angular/http';
+import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
 
 import { AppComponent } from './app.component';
 import { AppEventBus } from './app-event-bus.service';
 import { AppEventComponent } from 'app/app-events.component';
 import { AppRoutingModule } from './app-routing.module';
+import { DemoData } from './demo-data';
 import { PlaygroundComponent } from 'app/playground.component';
 import { HeroesComponent } from 'app/heroes.component';
 import { HeroesForeverComponent } from 'app/heroes-forever.component';
@@ -26,6 +28,7 @@ import { WikiService } from 'app/wiki.service';
     BrowserModule,
     FormsModule,
     HttpModule,
+    InMemoryWebApiModule.forRoot(DemoData),
     JsonpModule,
     AppRoutingModule,
   ],

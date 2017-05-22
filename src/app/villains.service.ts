@@ -7,7 +7,7 @@ import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/map';
 
 import { AppEventBus } from 'app/app-event-bus.service';
-import { Villain } from './villain';
+import { Villain, villainsUrl } from './villain';
 
 @Injectable()
 export class VillainsService {
@@ -16,8 +16,8 @@ export class VillainsService {
 
   constructor(http: Http, appEventBus: AppEventBus) {
 
-  this.villains = http.get('villains.json')
-    .map(res => res.json() as Villain[])
+  this.villains = http.get(villainsUrl)
+    .map(res => res.json().data as Villain[])
 
     .do(() => appEventBus.log('VillainsService', 'Fetched villains'))
 
