@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 
-
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 
@@ -10,7 +9,6 @@ import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/switchMap';
-
 
 import { WikiService } from './wiki.service';
 
@@ -35,7 +33,10 @@ export class WikiComponent implements OnInit {
 
 
   private searchTermStream = new Subject<string>();
-  search(term: string) { this.searchTermStream.next(term); }
+
+  search(term: string) {
+    this.searchTermStream.next(term);
+  }
 
   constructor (private wikipediaService: WikiService) {}
 

@@ -20,11 +20,53 @@ import 'rxjs/add/operator/filter';
   templateUrl: './playground.component.html'
 })
 export class PlaygroundComponent implements OnInit {
-
   //////// Demo 1 ///////////
 
   demo1() {
     this.currentDemo = 'Demo #1';
+
+    /////// Observable
+    const observable = new Observable(
+
+      // A function that takes an Observer
+      (observer: Observer<string>) => {
+
+        /**
+         * Whatever we're observing should call the observer
+         *
+         * Let's just bake the actions in
+         */
+
+        // Synchronous
+        observer.next('Hello, good looking!');
+
+      }
+    );
+
+    ////// Subscriber
+    const subscriber: Observer<string> = {
+
+      next: value =>
+        this.items.push(value),
+
+      error: (err: string) =>
+        this.errorMessage = err,
+
+      complete: () =>
+        this.items.push('observable completed')
+
+    };
+
+    ////// Subscribe to execute
+    // Nothing happens until we subscribe!
+    observable.subscribe(subscriber);
+
+  }
+
+  //////// Demo 2 ///////////
+
+  demo2() {
+    this.currentDemo = 'Demo #2';
 
     /////// Observable
     const observable = new Observable(
@@ -67,16 +109,16 @@ export class PlaygroundComponent implements OnInit {
 
     };
 
-    ////// Subcribe to execute
+    ////// Subscribe to execute
     // Nothing happens until we subscribe!
     observable.subscribe(subscriber);
 
   }
 
-  //////// Demo 2 ///////////
+  //////// Demo 3 ///////////
 
-  demo2() {
-    this.currentDemo = 'Demo #2';
+  demo3() {
+    this.currentDemo = 'Demo #3';
     this.items = [];
 
     const observable = Observable.fromEvent(this.inputEl, 'keyup');
@@ -100,6 +142,7 @@ export class PlaygroundComponent implements OnInit {
     };
 
     //// Nothing happens until we subscribe!
+    // Returns a subscription with teardown logic
     const subscription = observable.subscribe(observer);
 
   }
