@@ -20,10 +20,10 @@ import { TimerCacheService } from './timer-cache.service';
 })
 export class TimerCacheComponent implements OnInit, OnDestroy {
 
-  private onDestroy = new Subject();
-  private subscriptionA; Subscription;
-
   heroCache: Observable<Hero[]>;
+
+  private onDestroy = new Subject();
+  private subscriptionA: Subscription;
 
   constructor(timerCacheService: TimerCacheService) {
     this.heroCache = timerCacheService.heroes;

@@ -44,7 +44,8 @@ export class WikiComponent implements OnInit {
 
     this.articles = this.searchTermStream
 
-      .debounceTime(500)       // wait 1/2 second for typing to stop
+      .debounceTime(1500)       // wait 1.5 seconds (demo length) for typing to stop
+
       .distinctUntilChanged()  // skip if the current search term is the same as the last on
 
       // map search term to function that _returns an observable_.
