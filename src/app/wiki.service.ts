@@ -23,7 +23,8 @@ export class WikiService {
     this.retryNotifier = createRetryWhenNotifier(appEventBus, svcName, this.wikiUrl);
   }
 
-  search (term: string) {
+  /** Search wikipedia for articles that match the search term. Returns an observable.  */
+  searchStream (term: string) {
 
     // Wikipedia's JSONP API
     let params = new URLSearchParams();

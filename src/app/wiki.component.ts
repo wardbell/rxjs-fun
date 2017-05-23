@@ -44,15 +44,17 @@ export class WikiComponent implements OnInit {
 
     this.articles = this.searchTermStream
 
-      .debounceTime(500)
-      .distinctUntilChanged()
-      .switchMap((term: string) => this.wikipediaService.search(term))
+      .debounceTime(500)       // wait 1/2 second for typing to stop
+      .distinctUntilChanged()  // skip if the current search term is the same as the last on
 
-      .do(() => this.errorMessage = '')
+      // map search term to function that _returns an observable_.
+      .switchMap((term: string) => this.wikipediaService.searchStream(term))
+
+      .do(() => this.errorMessage = '') // clear previous error message
       .catch((err: Error) => this.errorMessage = err.message);
 
   // The `articles` Observable does not complete.
-  // Should unsubscribe when component destroyed ... but don't have to
-  // because async pipe does that.
+  // We should unsubscribe when component destroyed ... but don't have to
+  // because async pipe does that for us
   }
 }
