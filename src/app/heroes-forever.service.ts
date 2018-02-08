@@ -23,9 +23,11 @@ export class HeroesForeverService {
 
       .map(heroes => heroTouch(heroes))
 
-      .publishLast(); // share once source completes.
+      .publishLast(); // share after source completes.
 
-    heroesForever.connect(); // start subscribing immediately.
+    // Subscribe immediately, triggering fetch..
+    // Now others can subscribe too and get the same last value
+    heroesForever.connect();
 
     this.heroesForever = heroesForever;
   }

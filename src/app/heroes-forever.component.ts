@@ -35,6 +35,7 @@ export class HeroesForeverComponent implements OnInit {
     // This time we get heroes from the CACHED observable
     this.heroForeverService.heroesForever
 
+      // Proves heroesForever completes so no need to unsubscribe.
       // .do(null, null, () => console.log('heroes forever completed'))
 
       .subscribe(heroes => this.heroes = heroes);

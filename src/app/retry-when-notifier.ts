@@ -44,7 +44,7 @@ export function createRetryWhenNotifier(appEventBus: AppEventBus, svcName?: stri
       // by returning an observable
       } else {
         appEventBus.log(svcName, 'Retry #' + retries);
-        return of().delay(1000 * retries);
+        return of(null).delay(1000 * retries);
       }
     });
 
