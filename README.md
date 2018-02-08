@@ -1,5 +1,7 @@
 # RxjsFun
 
+**This is the source code that accompanies the Pluralsight course, "_Play-by-Play: Rxjs and Angular_".**
+
 RxJS + Angular: examples, experiments, and presentations
 
 RXjs Timer Cache example is [on plunker](https://plnkr.co/edit/urMxeORFvsKyqb8ijV64).
